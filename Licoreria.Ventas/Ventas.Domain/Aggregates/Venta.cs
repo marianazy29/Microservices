@@ -11,19 +11,20 @@ namespace Ventas.Domain.Aggregates
         public Guid Id { get; private set; }
         public Guid UsuarioId { get; private set; }
         public Guid ClienteId { get; private set; }
-        public double Descuento { get; private set; }
-        public double MontoTotal { get; private set; }
         public DateTime Fecha { get; private set; }
+        public double Descuento { get; private set; }
+        public double MontoTotal { get; private set; }       
         public string Comentarios { get; private set; }
         public string Estado { get; private set; }
 
         private readonly List<DetalleDeVenta> _detalles = new();
         public IReadOnlyCollection<DetalleDeVenta> Detalles => _detalles.AsReadOnly();
-        public Venta(Guid id, Guid clienteId, double montoTotal,string comentarios)
+        public Venta(Guid usuarioId,Guid clienteId,string comentarios)
         {
-            Id = id;
+            Id = Guid.NewGuid();
+            UsuarioId = usuarioId;
             ClienteId = clienteId;
-            MontoTotal = montoTotal;
+            MontoTotal = 0;
             Fecha = DateTime.UtcNow;
             Comentarios = comentarios;
             Estado = "ACTIVA";
