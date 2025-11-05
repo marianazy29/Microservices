@@ -13,6 +13,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. Application", "02. Appl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ventas.Application", "Ventas.Application\Ventas.Application.csproj", "{78CCBAAB-9C63-4AB8-80C4-304C2AB4A2ED}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03. Infrastructure", "03. Infrastructure", "{FE5F8CF3-4CF5-456D-8D6D-8C82AF229846}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ventas.Infrastructure", "Ventas.Infrastructure\Ventas.Infrastructure.csproj", "{D994A901-BA3D-48BF-97B4-3C52E4269711}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,10 @@ Global
 		{78CCBAAB-9C63-4AB8-80C4-304C2AB4A2ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78CCBAAB-9C63-4AB8-80C4-304C2AB4A2ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78CCBAAB-9C63-4AB8-80C4-304C2AB4A2ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D994A901-BA3D-48BF-97B4-3C52E4269711}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D994A901-BA3D-48BF-97B4-3C52E4269711}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D994A901-BA3D-48BF-97B4-3C52E4269711}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D994A901-BA3D-48BF-97B4-3C52E4269711}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +44,8 @@ Global
 		{D6621198-BB70-4DA5-A203-9DFF77F51B29} = {97A7D5CE-1DD9-40B0-8BCE-F33CB4E97F06}
 		{865A6C8C-58F9-4EEB-8007-A361BE00C196} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{78CCBAAB-9C63-4AB8-80C4-304C2AB4A2ED} = {865A6C8C-58F9-4EEB-8007-A361BE00C196}
+		{FE5F8CF3-4CF5-456D-8D6D-8C82AF229846} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{D994A901-BA3D-48BF-97B4-3C52E4269711} = {FE5F8CF3-4CF5-456D-8D6D-8C82AF229846}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2A73BB46-C917-4B7E-BD93-38E074AF66DC}

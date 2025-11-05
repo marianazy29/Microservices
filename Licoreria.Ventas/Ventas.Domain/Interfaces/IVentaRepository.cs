@@ -9,10 +9,10 @@ namespace Ventas.Domain.Interfaces
 {
     public interface IVentaRepository
     {
-        Task<Venta?> GetAsync(Guid id);
-        Task<IEnumerable<Venta>> ListAsync();
-        Task AddAsync(Venta venta);
-        Task UpdateAsync(Venta venta);
-        Task DeleteAsync(Guid id);
+        Task<Venta?> GetById(Guid id);
+        Task<ICollection<Venta>> List();
+        Task Add(Venta venta);
+        Task Update(Venta venta);
+        Task Delete(Guid id);
     }
 }

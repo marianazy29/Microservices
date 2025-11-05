@@ -12,6 +12,7 @@ namespace Clientes.Domain.Aggregates
     {
         public Guid Id { get; private set; }
         public string NombreCompleto { get; private set; }
+        public string Estado { get; private set; }
         public PuntosAcumulados PuntosAcumulados { get; private set; }
 
         private readonly List<Premio> _premios = new();
@@ -21,7 +22,8 @@ namespace Clientes.Domain.Aggregates
         {
             Id = Guid.NewGuid();
             NombreCompleto = nombre;
-            PuntosAcumulados = new PuntosAcumulados(0); 
+            PuntosAcumulados = new PuntosAcumulados(0);
+            Estado = "ACTIVO";
         }
 
         public void AgregarPuntos(decimal puntos)

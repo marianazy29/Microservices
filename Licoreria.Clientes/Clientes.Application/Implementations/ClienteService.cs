@@ -22,7 +22,7 @@ namespace Clientes.Application.Implementations
 
         public async Task<DtoResponseUsuario?> GetCliente(Guid id)
         {
-            var cliente = await _clienteRepository.GetAsync(id);
+            var cliente = await _clienteRepository.GetById(id);
             if (cliente == null) return null;
 
             return new DtoResponseUsuario
@@ -42,25 +42,25 @@ namespace Clientes.Application.Implementations
         public async Task CrearCliente(DtoRequestCliente request)
         {
             var cliente = new Cliente(request.NombreCompleto);
-            await _clienteRepository.AddAsync(cliente);
+            await _clienteRepository.Add(cliente);
         }
 
         public async Task SumarPuntos(Guid clienteId, decimal puntos)
         {
-            var cliente = await _clienteRepository.GetAsync(clienteId);
+            var cliente = await _clienteRepository.GetById(clienteId);
             if (cliente == null) throw new Exception("Cliente no encontrado");
 
             cliente.AgregarPuntos(puntos);
-            await _clienteRepository.UpdateAsync(cliente);
+            await _clienteRepository.Update(cliente);
         }
 
         public async Task EntregarPremio(Guid clienteId, string descripcion, Guid productoId)
         {
-            var cliente = await _clienteRepository.GetAsync(clienteId);
+            var cliente = await _clienteRepository.GetById(clienteId);
             if (cliente == null) throw new Exception("Cliente no encontrado");
 
             cliente.EntregarPremio(descripcion, productoId);
-            await _clienteRepository.UpdateAsync(cliente);
+            await _clienteRepository.Update(cliente);
         }
 
 

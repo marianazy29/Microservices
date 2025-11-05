@@ -9,10 +9,10 @@ namespace Clientes.Domain.Interfaces
 {
     public interface IClienteRepository
     {
-        Task<Cliente?> GetAsync(Guid id);
-        Task<ICollection<Cliente>> ListAsync();
-        Task AddAsync(Cliente cliente);
-        Task UpdateAsync(Cliente cliente);
-        Task DeleteAsync(Guid id);
+        Task<Cliente?> GetById(Guid id);
+        Task<ICollection<Cliente>> List();
+        Task Add(Cliente cliente);
+        Task Update(Cliente cliente);
+        Task Delete(Guid id);
     }
 }
