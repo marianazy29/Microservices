@@ -10,7 +10,7 @@ namespace Clientes.Application.Response
     {
         public Guid Id { get; set; }
         public string NombreCompleto { get; set; } = null!;
-        public decimal PuntosAcumulados { get; set; }
+        public double PuntosAcumulados { get; set; }
         public List<DtoResponsePremio> Premios { get; set; } = new();
     }
 }

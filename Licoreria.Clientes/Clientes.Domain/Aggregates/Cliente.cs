@@ -26,7 +26,7 @@ namespace Clientes.Domain.Aggregates
             Estado = "ACTIVO";
         }
 
-        public void AgregarPuntos(decimal puntos)
+        public void AgregarPuntos(double puntos)
         {
             PuntosAcumulados = PuntosAcumulados.Sumar(puntos);
         }

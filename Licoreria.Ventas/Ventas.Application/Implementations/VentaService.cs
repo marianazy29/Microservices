@@ -21,16 +21,16 @@ namespace Ventas.Application.Implementations
            
         }
 
-        public async Task RegistrarVenta(DtoRequestVenta requestVenta, List<DtoRequestDetalleDeVenta> requestDetalle)
+        public async Task RegistrarVenta(DtoRequestVenta requestVenta)
         {
             var venta = new Venta(requestVenta.UsuarioId, requestVenta.ClienteId, requestVenta.Comentarios);
 
-            foreach (var d in requestDetalle)
+            foreach (var d in requestVenta.Detalles)
             {
                 venta.AgregarDetalle(d.ProductoId, d.Cantidad, d.Precio,d.Descuento);
             }
 
-            await _ventaRepository.AddAsync(venta);
+            await _ventaRepository.Add(venta);
 
             // Calcular puntos: por cada 50 Bs suma 10 puntos
             decimal monto = Convert.ToDecimal(venta.MontoTotal);

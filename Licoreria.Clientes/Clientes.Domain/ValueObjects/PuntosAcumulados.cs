@@ -8,11 +8,11 @@ namespace Clientes.Domain.ValueObjects
 {
     public class PuntosAcumulados
     {
-        public decimal Puntos { get; private set; }
+        public double Puntos { get; private set; }
 
         private PuntosAcumulados() { }
 
-        public PuntosAcumulados(decimal puntos)
+        public PuntosAcumulados(double puntos)
         {
             if (puntos < 0)
             {
@@ -21,7 +21,7 @@ namespace Clientes.Domain.ValueObjects
             Puntos = puntos;
         }
 
-        public PuntosAcumulados Sumar(decimal valor) => new(valor + Puntos);
+        public PuntosAcumulados Sumar(double valor) => new(valor + Puntos);
         public PuntosAcumulados Restablecer() => new(0);
     }
 }

@@ -9,6 +9,6 @@ namespace Ventas.Application.Interfaces
 {
     public interface IVentaService
     {
-        Task RegistrarVenta(DtoRequestVenta requestVenta, List<DtoRequestDetalleDeVenta> requestDetalle);
+        Task RegistrarVenta(DtoRequestVenta requestVenta);
     }
 }

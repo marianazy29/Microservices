@@ -12,9 +12,9 @@ namespace Clientes.Application.Interfaces
     {
         Task<DtoResponseUsuario?> GetCliente(Guid id);
         Task CrearCliente(DtoRequestCliente request);
-        Task SumarPuntos(Guid clienteId, decimal puntos);
+        Task SumarPuntos(Guid clienteId, double puntos);
         Task EntregarPremio(Guid clienteId, string descripcion, Guid productoId);
-        Task Delete(int id);
+        Task Delete(Guid id);
        
     }
 }
