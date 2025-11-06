@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Clientes.Domain.Interfaces
 {
     public interface IClienteRepository
-    {
+    {        
         Task<Cliente?> GetById(Guid id);
         Task<ICollection<Cliente>> List();
         Task Add(Cliente cliente);

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ventas.Application.Interfaces;
 using Ventas.Application.Request;
+using Ventas.Application.Response;
 using Ventas.Domain.Aggregates;
 using Ventas.Domain.Interfaces;
 
@@ -13,12 +14,12 @@ namespace Ventas.Application.Implementations
     public class VentaService : IVentaService
     {
         private readonly IVentaRepository _ventaRepository;
-       
+        private readonly IClienteApiClient _clienteApiClient;
 
-        public VentaService(IVentaRepository ventaRepository)
+        public VentaService(IVentaRepository ventaRepository, IClienteApiClient clienteApiClient)
         {
             _ventaRepository = ventaRepository;
-           
+            _clienteApiClient = clienteApiClient;
         }
 
         public async Task RegistrarVenta(DtoRequestVenta requestVenta)
@@ -40,5 +41,14 @@ namespace Ventas.Application.Implementations
             // Invocar microservicio Clientes para sumar puntos
             //await _clienteClient.SumarPuntosAsync(clienteId, puntos);
         }
+
+        public async Task<ICollection<DtoResponseCliente>> ObtenerClientes()
+        {
+            
+            var clientes = await _clienteApiClient.ListarClientes();
+            return clientes;
+        }
+
+        
     }
 }

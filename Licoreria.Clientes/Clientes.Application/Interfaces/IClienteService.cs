@@ -10,7 +10,8 @@ namespace Clientes.Application.Interfaces
 {
     public interface IClienteService
     {
-        Task<DtoResponseUsuario?> GetCliente(Guid id);
+        Task<ICollection<DtoResponseClienteLista>> List();
+        Task<DtoResponseCliente?> GetCliente(Guid id);
         Task CrearCliente(DtoRequestCliente request);
         Task SumarPuntos(Guid clienteId, double puntos);
         Task EntregarPremio(Guid clienteId, string descripcion, Guid productoId);

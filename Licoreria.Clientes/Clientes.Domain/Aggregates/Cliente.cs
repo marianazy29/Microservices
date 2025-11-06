@@ -18,6 +18,7 @@ namespace Clientes.Domain.Aggregates
         private readonly List<Premio> _premios = new();
         public IReadOnlyCollection<Premio> Premios => _premios.AsReadOnly();
 
+        public Cliente() { }
         public Cliente(string nombre)
         {
             Id = Guid.NewGuid();

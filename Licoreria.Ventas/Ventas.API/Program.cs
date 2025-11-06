@@ -1,12 +1,18 @@
 using Microsoft.EntityFrameworkCore;
+using Polly;
 using Ventas.Application.Implementations;
 using Ventas.Application.Interfaces;
 using Ventas.Domain.Interfaces;
+using Ventas.Infrastructure.ExternalServices;
 using Ventas.Infrastructure.Implementations;
 using Ventas.Infrastructure.Persistence;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static System.Net.Mime.MediaTypeNames;
 
 var builder = WebApplication.CreateBuilder(args);
 var corsConfiguration = "VentasAPI";
+
+
 
 builder.Services.AddCors(setup =>
 {
@@ -21,12 +27,20 @@ builder.Services.AddCors(setup =>
 // Add services to the container.
 builder.Services.AddScoped<IVentaRepository, VentaRepository>();
 builder.Services.AddScoped<IVentaService, VentaService>();
+builder.Services.AddScoped<IClienteApiClient, ClienteApiClient>();
 
 builder.Services.AddDbContext<VentaDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("VentasDB"));
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
+
+builder.Services.AddHttpClient<IClienteApiClient, ClienteApiClient>(client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5001/"); // Ajusta la URL base de tu microservicio Clientes
+})
+.AddTransientHttpErrorPolicy(policy => policy.WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))))
+.AddTransientHttpErrorPolicy(policy => policy.CircuitBreakerAsync(2, TimeSpan.FromSeconds(30)));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

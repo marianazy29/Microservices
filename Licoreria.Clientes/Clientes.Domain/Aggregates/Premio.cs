@@ -13,7 +13,7 @@ namespace Clientes.Domain.Aggregates
         public Guid ProductoId { get; private set; }
         public string Descripcion { get; private set; }
         public DateTime Fecha { get; private set; }
-        public bool Activo { get; private set; }
+        public string Estado { get; private set; }
 
         private Premio() { }
 
@@ -24,9 +24,9 @@ namespace Clientes.Domain.Aggregates
             ProductoId = productoId;
             Descripcion = descripcion;
             Fecha = DateTime.Now;
-            Activo = true;
+            Estado = "ACTIVO";
         }
 
-        public void Inactivar() => Activo = false;
+        public void Inactivar() => Estado = "INACTIVO";
     }
 }

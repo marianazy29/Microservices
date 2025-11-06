@@ -1,4 +1,5 @@
 ﻿using Clientes.Application.Implementations;
+using Clientes.Application.Interfaces;
 using Clientes.Application.Request;
 using Clientes.Application.Response;
 using Microsoft.AspNetCore.Mvc;
@@ -10,15 +11,23 @@ namespace Clientes.API.Controllers
     [Route("api/[controller]")]
     public class ClientesController : ControllerBase
     {
-        private readonly ClienteService _clienteService;
+        private readonly IClienteService _clienteService;
 
-        public ClientesController(ClienteService clienteService)
+        public ClientesController(IClienteService clienteService)
         {
             _clienteService = clienteService;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<List<DtoResponseClienteLista>>> ListarClientes()
+        {
+            var clientes = await _clienteService.List();
+
+            return Ok(clientes);
+        }
+
         [HttpGet("{id}")]
-        public async Task<ActionResult<DtoResponseUsuario?>> GetCliente(Guid id)
+        public async Task<ActionResult<DtoResponseCliente?>> GetCliente(Guid id)
         {
             var cliente = await _clienteService.GetCliente(id);
             if (cliente == null)

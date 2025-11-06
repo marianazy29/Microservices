@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Clientes.Application.Response
 {
-    public class DtoResponseUsuario
+    public class DtoResponseCliente
     {
         public Guid Id { get; set; }
         public string NombreCompleto { get; set; } = null!;

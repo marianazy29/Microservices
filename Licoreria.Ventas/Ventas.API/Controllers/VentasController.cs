@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Ventas.Application.Implementations;
+using Ventas.Application.Interfaces;
 using Ventas.Application.Request;
 
 namespace Ventas.API.Controllers
@@ -9,7 +10,7 @@ namespace Ventas.API.Controllers
     [Route("api/[controller]")]
     public class VentasController : ControllerBase
     {
-        private readonly VentaService _ventaService;
+        private readonly IVentaService _ventaService;
 
         public VentasController(VentaService ventaService)
         {
@@ -23,6 +24,13 @@ namespace Ventas.API.Controllers
             
             await _ventaService.RegistrarVenta(request);
             return Ok();
+        }
+
+        [HttpGet("clientes")]
+        public async Task<IActionResult> ListarClientes()
+        {
+            var clientes = await _ventaService.ObtenerClientes();
+            return Ok(clientes);
         }
 
     }

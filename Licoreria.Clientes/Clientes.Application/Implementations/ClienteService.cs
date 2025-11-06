@@ -20,12 +20,12 @@ namespace Clientes.Application.Implementations
             _clienteRepository = clienteRepository;
         }
 
-        public async Task<DtoResponseUsuario?> GetCliente(Guid id)
+        public async Task<DtoResponseCliente?> GetCliente(Guid id)
         {
             var cliente = await _clienteRepository.GetById(id);
             if (cliente == null) return null;
 
-            return new DtoResponseUsuario
+            return new DtoResponseCliente
             {
                 Id = cliente.Id,
                 NombreCompleto = cliente.NombreCompleto,
@@ -69,6 +69,18 @@ namespace Clientes.Application.Implementations
             throw new NotImplementedException();
         }
 
-        
+        public async Task<ICollection<DtoResponseClienteLista>> List()
+        {
+            var clientes = await _clienteRepository.List();
+
+         
+            return clientes.Select(c => new DtoResponseClienteLista
+            {
+                Id = c.Id,
+                NombreCompleto = c.NombreCompleto
+            }).ToList();
+        }
+
+      
     }
 }
