@@ -8,6 +8,7 @@ services:
       - "5001:8080"
     environment:
       - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=clientes_db;Database=Clientes;User Id=sa;Password=System32;
     depends_on:
       - clientes_db
@@ -19,6 +20,7 @@ services:
     container_name: clientes2
     environment:
       - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=clientes_db;Database=Clientes;User Id=sa;Password=System32;
     depends_on:
       - clientes_db
@@ -51,6 +53,7 @@ services:
       - "5002:8080"
     environment:
       - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=ventas_db;Database=Ventas;User Id=sa;Password=System32;
       - ClientesApi__BaseUrl=http://nginx:80
     depends_on:
