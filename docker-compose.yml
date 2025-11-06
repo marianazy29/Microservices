@@ -1,0 +1,66 @@
+services:
+  clientes1:
+    build:
+      context: ./Licoreria.Clientes/
+      dockerfile: Dockerfile
+    container_name: clientes1
+    ports:
+      - "5001:8080"
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=clientes_db;Database=Clientes;User Id=sa;Password=System32;
+    depends_on:
+      - clientes_db
+
+  clientes2:
+    build:
+      context: ./Licoreria.Clientes/
+      dockerfile: Dockerfile
+    container_name: clientes2
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=clientes_db;Database=Clientes;User Id=sa;Password=System32;
+    depends_on:
+      - clientes_db
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx_lb
+    ports:
+      - "8081:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - clientes1
+      - clientes2
+
+  clientes_db:
+    build:
+      context: ./Licoreria.Clientes/Clientes.API/init-db/
+      dockerfile: Dockerfile
+    container_name: clientes_db
+    ports:
+      - "1434:1433"
+
+  ventas:
+    build:
+      context: ./Licoreria.Ventas/
+      dockerfile: Dockerfile
+    container_name: ventas
+    ports:
+      - "5002:8080"
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=ventas_db;Database=Ventas;User Id=sa;Password=System32;
+      - ClientesApi__BaseUrl=http://nginx:80
+    depends_on:
+      - ventas_db
+      - nginx
+
+  ventas_db:
+    build:
+      context: ./Licoreria.Ventas/Ventas.API/init-db/
+      dockerfile: Dockerfile
+    container_name: ventas_db
+    ports:
+      - "1433:1433"
