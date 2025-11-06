@@ -48,6 +48,8 @@ namespace Clientes.Infrastructure.Persistence.Implementations
 
         public async Task<ICollection<Cliente>> List()
         {
+            var a = await _context.Set<Cliente>()
+                .ToListAsync();
             return await _context.Set<Cliente>()
                 .ToListAsync();
         }

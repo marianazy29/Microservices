@@ -8,7 +8,7 @@ namespace Ventas.Application.Response
 {
     public class DtoResponseCliente
     {
-        Guid Id { get; set; }
-        Guid NombreCompleto { get; set; }
+        public Guid Id { get; set; }
+        public string NombreCompleto { get; set; }
     }
 }

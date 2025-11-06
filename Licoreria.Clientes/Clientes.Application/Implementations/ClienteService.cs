@@ -45,7 +45,7 @@ namespace Clientes.Application.Implementations
             await _clienteRepository.Add(cliente);
         }
 
-        public async Task SumarPuntos(Guid clienteId, double puntos)
+        public async Task SumarPuntos(Guid clienteId, decimal puntos)
         {
             var cliente = await _clienteRepository.GetById(clienteId);
             if (cliente == null) throw new Exception("Cliente no encontrado");

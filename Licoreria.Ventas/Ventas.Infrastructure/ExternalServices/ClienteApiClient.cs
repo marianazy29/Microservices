@@ -20,7 +20,7 @@ namespace Ventas.Infrastructure.ExternalServices
 
         public async Task<List<DtoResponseCliente>> ListarClientes()
         {
-            var response = await _httpClient.GetAsync("api/clientes");
+            var response = await _httpClient.GetAsync("api/Clientes");
             response.EnsureSuccessStatusCode();
 
             var json = await response.Content.ReadAsStringAsync();

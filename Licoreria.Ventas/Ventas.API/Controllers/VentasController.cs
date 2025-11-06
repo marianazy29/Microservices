@@ -12,7 +12,7 @@ namespace Ventas.API.Controllers
     {
         private readonly IVentaService _ventaService;
 
-        public VentasController(VentaService ventaService)
+        public VentasController(IVentaService ventaService)
         {
             _ventaService = ventaService;
         }

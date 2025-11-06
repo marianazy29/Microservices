@@ -44,7 +44,7 @@ namespace Clientes.API.Controllers
         }
 
         [HttpPost("{clienteId}/sumar-puntos")]
-        public async Task<IActionResult> SumarPuntos(Guid clienteId, double puntos)
+        public async Task<IActionResult> SumarPuntos(Guid clienteId, decimal puntos)
         {
             await _clienteService.SumarPuntos(clienteId, puntos);
             return NoContent();

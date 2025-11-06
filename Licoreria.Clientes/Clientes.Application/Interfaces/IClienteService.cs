@@ -13,7 +13,7 @@ namespace Clientes.Application.Interfaces
         Task<ICollection<DtoResponseClienteLista>> List();
         Task<DtoResponseCliente?> GetCliente(Guid id);
         Task CrearCliente(DtoRequestCliente request);
-        Task SumarPuntos(Guid clienteId, double puntos);
+        Task SumarPuntos(Guid clienteId, decimal puntos);
         Task EntregarPremio(Guid clienteId, string descripcion, Guid productoId);
         Task Delete(Guid id);
        
