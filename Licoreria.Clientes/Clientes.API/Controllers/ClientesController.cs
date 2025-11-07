@@ -37,7 +37,7 @@ namespace Clientes.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CrearCliente(DtoRequestCliente request)
+        public async Task<IActionResult> Add (DtoRequestCliente request)
         {
             await _clienteService.CrearCliente(request);
             return Created();

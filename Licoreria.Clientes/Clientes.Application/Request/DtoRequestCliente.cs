@@ -8,6 +8,6 @@ namespace Clientes.Application.Request
 {
     public class DtoRequestCliente
     {
-        public string NombreCompleto;
+        public string NombreCompleto { get; set; }
     }
 }

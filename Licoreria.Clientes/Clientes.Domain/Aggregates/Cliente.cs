@@ -11,9 +11,9 @@ namespace Clientes.Domain.Aggregates
     public class Cliente
     {
         public Guid Id { get; private set; }
-        public string NombreCompleto { get; private set; }
-        public string Estado { get; private set; }
+        public string NombreCompleto { get; private set; }        
         public PuntosAcumulados PuntosAcumulados { get; private set; }
+        public string Estado { get; private set; }
 
         private readonly List<Premio> _premios = new();
         public IReadOnlyCollection<Premio> Premios => _premios.AsReadOnly();

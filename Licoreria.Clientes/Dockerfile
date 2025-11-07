@@ -7,11 +7,10 @@ COPY Clientes.Infrastructure/Clientes.Infrastructure.csproj Clientes.Infrastruct
 COPY Clientes.API/Clientes.API.csproj Clientes.API/
 COPY Licoreria.Clientes.sln ./
 
-RUN dotnet restore Licoreria.Clientes.sln
+RUN dotnet restore "Clientes.API/Clientes.API.csproj"
 
 COPY . .
 
-WORKDIR /src/Clientes.API
 RUN dotnet publish -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
