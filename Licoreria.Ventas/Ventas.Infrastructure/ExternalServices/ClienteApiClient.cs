@@ -26,5 +26,6 @@ namespace Ventas.Infrastructure.ExternalServices
             var json = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<DtoResponseCliente>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
         }
+       
     }
 }

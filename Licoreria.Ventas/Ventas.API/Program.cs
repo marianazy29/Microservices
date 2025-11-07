@@ -37,7 +37,7 @@ builder.Services.AddDbContext<VentaDbContext>(options =>
 
 builder.Services.AddHttpClient<IClienteApiClient, ClienteApiClient>(client =>
 {
-    client.BaseAddress = new Uri("http://clientes1:8080/"); // Ajusta la URL base de tu microservicio Clientes
+    client.BaseAddress = new Uri("http://cliente-loadbalancer:80/"); // Ajusta la URL base de tu microservicio Clientes
 })
 .AddTransientHttpErrorPolicy(policy => policy.WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))))
 .AddTransientHttpErrorPolicy(policy => policy.CircuitBreakerAsync(2, TimeSpan.FromSeconds(30)));
