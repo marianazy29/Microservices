@@ -23,6 +23,42 @@ services:
     depends_on:
       - cliente_db
 
+  clientes2:
+    build:
+      context: ./Licoreria.Clientes/
+      dockerfile: Dockerfile
+    container_name: clientes2
+    ports:
+      - "5002:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - cliente_db
+
+  ventas_db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: ventas-db-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=System32
+      - MSSQL_PID=Developer
+    ports:
+      - "1434:1433"
+    volumes:
+      - ventas_sql_data:/var/opt/mssql
+
+  ventas:
+    build:
+      context: ./Licoreria.Ventas/
+      dockerfile: Dockerfile
+    container_name: ventas
+    ports:
+      - "5003:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - ventas_db
 
 volumes:
   sql_data:
+  ventas_sql_data:
