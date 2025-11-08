@@ -22,8 +22,15 @@ namespace Ventas.Application.Implementations
             _clienteApiClient = clienteApiClient;
         }
 
-        public async Task RegistrarVenta(DtoRequestVenta requestVenta)
+        public async Task<string> RegistrarVenta(DtoRequestVenta requestVenta)
         {
+            string estadoVenta = "Venta creada.";
+
+            if (!await _clienteApiClient.GetByid(requestVenta.ClienteId))
+            {
+                return estadoVenta = "El cliente no existe.";
+            }
+
             var venta = new Venta(requestVenta.UsuarioId, requestVenta.ClienteId, requestVenta.Comentarios);
 
             foreach (var d in requestVenta.Detalles)
@@ -33,13 +40,17 @@ namespace Ventas.Application.Implementations
 
             await _ventaRepository.Add(venta);
 
-            // Calcular puntos: por cada 50 Bs suma 10 puntos
+           
             decimal monto = Convert.ToDecimal(venta.MontoTotal);
             int bloques = (int)Math.Floor(monto / 50m);
             int puntos = bloques * 10;
 
-            // Invocar microservicio Clientes para sumar puntos
+            return estadoVenta;
+            
+
             //await _clienteClient.SumarPuntosAsync(clienteId, puntos);
+
+            
         }
 
         public async Task<ICollection<DtoResponseCliente>> ObtenerClientes()

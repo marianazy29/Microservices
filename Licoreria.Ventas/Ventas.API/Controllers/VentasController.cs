@@ -22,8 +22,8 @@ namespace Ventas.API.Controllers
             DtoRequestVenta request)
         {
             
-            await _ventaService.RegistrarVenta(request);
-            return Ok();
+           var response= await _ventaService.RegistrarVenta(request);
+           return Ok(response);
         }
 
         [HttpGet("clientes")]

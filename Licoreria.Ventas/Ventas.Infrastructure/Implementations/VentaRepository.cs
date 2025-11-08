@@ -19,10 +19,12 @@ namespace Ventas.Infrastructure.Implementations
             _context = context;
         }
 
-        public async Task Add(Venta venta)
+        public async Task<Guid> Add(Venta venta)
         {
             await _context.Set<Venta>().AddAsync(venta);
             await _context.SaveChangesAsync();
+
+            return venta.Id;
         }
 
         public Task Delete(Guid id)

@@ -18,6 +18,20 @@ namespace Ventas.Infrastructure.ExternalServices
             _httpClient = httpClient;
         }
 
+        public async Task<bool> GetByid(Guid id)
+        {
+            var response = await _httpClient.GetAsync($"api/Clientes/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                
+                return true;
+            }
+
+            return false;
+        }
+
+
         public async Task<List<DtoResponseCliente>> ListarClientes()
         {
             var response = await _httpClient.GetAsync("api/Clientes");

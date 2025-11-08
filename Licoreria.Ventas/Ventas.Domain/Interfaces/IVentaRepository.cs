@@ -11,7 +11,7 @@ namespace Ventas.Domain.Interfaces
     {
         Task<Venta?> GetById(Guid id);
         Task<ICollection<Venta>> List();
-        Task Add(Venta venta);
+        Task<Guid> Add(Venta venta);
         Task Update(Venta venta);
         Task Delete(Guid id);
     }

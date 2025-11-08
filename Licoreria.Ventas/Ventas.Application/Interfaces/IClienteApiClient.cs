@@ -10,5 +10,6 @@ namespace Ventas.Application.Interfaces
     public interface IClienteApiClient
     {
         Task<List<DtoResponseCliente>> ListarClientes();
+        Task<bool> GetByid(Guid id);
     }
 }
