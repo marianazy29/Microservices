@@ -2,6 +2,8 @@
 using Ventas.Application.Implementations;
 using Ventas.Application.Interfaces;
 using Ventas.Application.Request;
+using Ventas.Application.UseCases;
+using Ventas.Domain.Aggregates;
 
 namespace Ventas.API.Controllers
 {
@@ -10,28 +12,29 @@ namespace Ventas.API.Controllers
     [Route("api/[controller]")]
     public class VentasController : ControllerBase
     {
-        private readonly IVentaService _ventaService;
+        private readonly RegistrarVentaUseCase _registrarVentaUseCase;
 
-        public VentasController(IVentaService ventaService)
+        public VentasController(RegistrarVentaUseCase registrarVentaUseCase)
         {
-            _ventaService = ventaService;
+            _registrarVentaUseCase = registrarVentaUseCase;
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegistrarVenta(
-            DtoRequestVenta request)
+        public async Task<IActionResult> RegistrarVenta(DtoRequestVenta request)
         {
-            
-           var response= await _ventaService.RegistrarVenta(request);
-           return Ok(response);
+            var resultado = await _registrarVentaUseCase.EjecutarAsync(request);
+            if (resultado == "El cliente no existe.")
+                return BadRequest(resultado);
+
+            return Ok(resultado);
         }
 
-        [HttpGet("clientes")]
+        /*[HttpGet("clientes")]
         public async Task<IActionResult> ListarClientes()
         {
             var clientes = await _ventaService.ObtenerClientes();
             return Ok(clientes);
-        }
+        }*/
 
     }
 }

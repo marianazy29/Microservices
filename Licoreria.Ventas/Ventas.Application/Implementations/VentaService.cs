@@ -41,9 +41,9 @@ namespace Ventas.Application.Implementations
             await _ventaRepository.Add(venta);
 
            
-            decimal monto = Convert.ToDecimal(venta.MontoTotal);
+          /*  decimal monto = Convert.ToDecimal(venta.MontoTotal);
             int bloques = (int)Math.Floor(monto / 50m);
-            int puntos = bloques * 10;
+            int puntos = bloques * 10;*/
 
             return estadoVenta;
             

@@ -32,6 +32,9 @@ namespace Ventas.Domain.Aggregates
 
         public void AgregarDetalle(Guid productoId, int cantidad, double precio, double descuento)
         {
+            if (_detalles.Any(d => d.ProductoId == productoId && d.Estado == "ACTIVO"))
+                throw new InvalidOperationException("El producto ya fue agregado a la venta.");
+
             if (cantidad < 1)
                 throw new ArgumentException("La cantidad debe ser mayor que cero.");
 
@@ -56,7 +59,7 @@ namespace Ventas.Domain.Aggregates
         private void ActualizarMontoTotal()
         {
             double descuentoTotal = ActualizarDescuento();
-            MontoTotal = _detalles.Where(d => d.Estado == "ACTIVO").Sum(d => d.Precio * d.Cantidad) - descuentoTotal;
+            MontoTotal = _detalles.Where(d => d.Estado == "ACTIVO").Sum(d => d.TotalLinea);
         }
 
         private double ActualizarDescuento()

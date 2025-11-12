@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Polly;
 using Ventas.Application.Implementations;
 using Ventas.Application.Interfaces;
+using Ventas.Application.UseCases;
 using Ventas.Domain.Interfaces;
 using Ventas.Infrastructure.ExternalServices;
 using Ventas.Infrastructure.Implementations;
@@ -28,6 +29,8 @@ builder.Services.AddCors(setup =>
 builder.Services.AddScoped<IVentaRepository, VentaRepository>();
 builder.Services.AddScoped<IVentaService, VentaService>();
 builder.Services.AddScoped<IClienteApiClient, ClienteApiClient>();
+builder.Services.AddScoped<IKafkaProducer, KafkaProducer>();
+builder.Services.AddScoped<RegistrarVentaUseCase>();
 
 builder.Services.AddDbContext<VentaDbContext>(options =>
 {
@@ -38,6 +41,7 @@ builder.Services.AddDbContext<VentaDbContext>(options =>
 builder.Services.AddHttpClient<IClienteApiClient, ClienteApiClient>(client =>
 {
     client.BaseAddress = new Uri("http://cliente-loadbalancer:80/");
+   
 })
 .AddTransientHttpErrorPolicy(policy => policy.WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))))
 .AddTransientHttpErrorPolicy(policy => policy.CircuitBreakerAsync(2, TimeSpan.FromSeconds(30)));
