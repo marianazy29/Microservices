@@ -9,6 +9,6 @@ namespace Ventas.Application.Interfaces
 {
     public interface IKafkaProducer
     {
-        Task PublishVentaCreadaAsync(VentaCreadaEvent evento);
+        Task PublicarVentaCreadaAsync(VentaCreadaEvent evento);
     }
 }

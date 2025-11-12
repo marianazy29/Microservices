@@ -45,12 +45,12 @@ namespace Clientes.Application.Implementations
             await _clienteRepository.Add(cliente);
         }
 
-        public async Task SumarPuntos(Guid clienteId, decimal puntos)
+        public async Task SumarPuntos(Guid clienteId, decimal totalVenta)
         {
             var cliente = await _clienteRepository.GetById(clienteId);
             if (cliente == null) throw new Exception("Cliente no encontrado");
 
-            cliente.AgregarPuntos(puntos);
+            cliente.AgregarPuntos(totalVenta);
             await _clienteRepository.Update(cliente);
         }
 

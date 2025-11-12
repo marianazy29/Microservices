@@ -1,6 +1,8 @@
 using Clientes.Application.Implementations;
 using Clientes.Application.Interfaces;
 using Clientes.Domain.Interfaces;
+using Clientes.Infrastructure.ExternalServices;
+using Clientes.Infrastructure.Messaging;
 using Clientes.Infrastructure.Persistence;
 using Clientes.Infrastructure.Persistence.Implementations;
 using Microsoft.EntityFrameworkCore;
@@ -21,13 +23,17 @@ builder.Services.AddCors(setup =>
 // Add services to the container.
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<IClienteService, ClienteService>();
+builder.Services.AddSingleton<IKafkaConsumer, KafkaConsumer>();
 
 builder.Services.AddDbContext<ClienteDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("ClientesDB"));
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
+builder.Services.Configure<KafkaConsumerSettings>(
+    builder.Configuration.GetSection("Kafka:Consumer"));
 
+builder.Services.AddHostedService<KafkaConsumerService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -36,13 +42,12 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-/*if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}*/
-app.UseSwagger();
-app.UseSwaggerUI();
+}
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

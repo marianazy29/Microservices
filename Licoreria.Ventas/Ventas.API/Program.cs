@@ -46,6 +46,12 @@ builder.Services.AddHttpClient<IClienteApiClient, ClienteApiClient>(client =>
 .AddTransientHttpErrorPolicy(policy => policy.WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))))
 .AddTransientHttpErrorPolicy(policy => policy.CircuitBreakerAsync(2, TimeSpan.FromSeconds(30)));
 
+builder.Services.Configure<KafkaProducerSettings>(
+    builder.Configuration.GetSection("Kafka:Producer"));
+
+builder.Services.Configure<KafkaConsumerSettings>(
+    builder.Configuration.GetSection("Kafka:Consumer"));
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

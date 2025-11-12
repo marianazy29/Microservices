@@ -27,8 +27,12 @@ namespace Clientes.Domain.Aggregates
             Estado = "ACTIVO";
         }
 
-        public void AgregarPuntos(decimal puntos)
+        public void AgregarPuntos(decimal totalVenta)
         {
+            const decimal montoMinimo = 50m;
+            const int puntosPorMonto = 10;
+
+            int puntos = (int)((totalVenta / montoMinimo) * puntosPorMonto);
             PuntosAcumulados = PuntosAcumulados.Sumar(puntos);
         }
 

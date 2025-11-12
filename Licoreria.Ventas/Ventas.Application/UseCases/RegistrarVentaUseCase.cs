@@ -43,7 +43,7 @@ namespace Ventas.Application.UseCases
             var evento = new VentaCreadaEvent(venta.ClienteId, venta.MontoTotal);
 
            
-            await _kafkaProducer.PublishVentaCreadaAsync(evento);
+            await _kafkaProducer.PublicarVentaCreadaAsync(evento);
             return "Venta creada.";
         }
     }
