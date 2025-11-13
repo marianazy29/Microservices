@@ -6,6 +6,7 @@ using Clientes.Infrastructure.Messaging;
 using Clientes.Infrastructure.Persistence;
 using Clientes.Infrastructure.Persistence.Implementations;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 var builder = WebApplication.CreateBuilder(args);
 var corsConfiguration = "ClientesAPI";
@@ -21,19 +22,24 @@ builder.Services.AddCors(setup =>
     });
 });
 // Add services to the container.
+/*builder.Services.Configure<KafkaConsumerSettings>(
+    builder.Configuration.GetSection("Kafka:Consumer"));*/
+
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<IClienteService, ClienteService>();
-builder.Services.AddSingleton<IKafkaConsumer, KafkaConsumer>();
+
+/*builder.Services.AddSingleton<KafkaConsumer>();
+builder.Services.AddHostedService<KafkaConsumerService>();*/
+builder.Services.AddHostedService<KafkaConsumerHostedService>();
 
 builder.Services.AddDbContext<ClienteDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("ClientesDB"));
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
-builder.Services.Configure<KafkaConsumerSettings>(
-    builder.Configuration.GetSection("Kafka:Consumer"));
 
-builder.Services.AddHostedService<KafkaConsumerService>();
+
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

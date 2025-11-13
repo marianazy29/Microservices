@@ -12,8 +12,8 @@ namespace Ventas.Domain.Aggregates
         public Guid UsuarioId { get; private set; }
         public Guid ClienteId { get; private set; }
         public DateTime Fecha { get; private set; }
-        public double Descuento { get; private set; }
-        public double MontoTotal { get; private set; }       
+        public decimal Descuento { get; private set; }
+        public decimal MontoTotal { get; private set; }       
         public string Comentarios { get; private set; }
         public string Estado { get; private set; }
 
@@ -30,7 +30,7 @@ namespace Ventas.Domain.Aggregates
             Estado = "ACTIVA";
         }
 
-        public void AgregarDetalle(Guid productoId, int cantidad, double precio, double descuento)
+        public void AgregarDetalle(Guid productoId, int cantidad, decimal precio, decimal descuento)
         {
             if (_detalles.Any(d => d.ProductoId == productoId && d.Estado == "ACTIVO"))
                 throw new InvalidOperationException("El producto ya fue agregado a la venta.");
@@ -58,11 +58,11 @@ namespace Ventas.Domain.Aggregates
 
         private void ActualizarMontoTotal()
         {
-            double descuentoTotal = ActualizarDescuento();
+            decimal descuentoTotal = ActualizarDescuento();
             MontoTotal = _detalles.Where(d => d.Estado == "ACTIVO").Sum(d => d.TotalLinea);
         }
 
-        private double ActualizarDescuento()
+        private decimal ActualizarDescuento()
         {
            return  Descuento = _detalles.Where(d => d.Estado == "ACTIVO").Sum(d => d.Descuento);
         }

@@ -16,7 +16,7 @@ namespace Clientes.Domain.IntegrationEvents
         {
             ClienteId = clienteId;
             MontoTotal = montoTotal;
-            Tipo = "VENTA_CRAEDA";
+            Tipo = "VENTA_CREADA";
         }
     }
 }

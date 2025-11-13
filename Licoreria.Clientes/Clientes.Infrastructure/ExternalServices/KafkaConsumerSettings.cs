@@ -12,5 +12,7 @@ namespace Clientes.Infrastructure.ExternalServices
         public string BootstrapServers { get; set; } = "";
         public string KeyDeserializer { get; set; } = "";
         public string ValueDeserializer { get; set; } = "";
+       
+
     }
 }

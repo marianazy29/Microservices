@@ -12,12 +12,12 @@ namespace Ventas.Domain.Aggregates
         public Guid VentaId { get; private set; }
         public Guid ProductoId { get; private set; }
         public int Cantidad { get; private set; }
-        public double Precio { get; private set; }
-        public double Descuento { get; private set; }
-        public double TotalLinea { get; private set; }
+        public decimal Precio { get; private set; }
+        public decimal Descuento { get; private set; }
+        public decimal TotalLinea { get; private set; }
         public string Estado { get; private set; }
 
-        public DetalleDeVenta(Guid ventaId, Guid productoId, int cantidad, double precio, double descuento)
+        public DetalleDeVenta(Guid ventaId, Guid productoId, int cantidad, decimal precio, decimal descuento)
         {
             Id = Guid.NewGuid();
             VentaId = ventaId;
@@ -40,7 +40,7 @@ namespace Ventas.Domain.Aggregates
                 throw new ArgumentException("Cantidad debe ser mayor que cero.");
             Cantidad = nuevaCantidad;
         }
-        public void ActualizarTotalLinea(double cantidad, double precio, double descuento)
+        public void ActualizarTotalLinea(decimal cantidad, decimal precio, decimal descuento)
         {
             TotalLinea = (cantidad * precio) - descuento; ;
         }

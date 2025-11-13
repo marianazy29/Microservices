@@ -10,8 +10,8 @@ namespace Ventas.Application.Request
     {        
         public Guid ProductoId { get; set; }
         public int Cantidad { get; set; }
-        public double Precio { get; set; }
-        public double Descuento { get; set; }
+        public decimal Precio { get; set; }
+        public decimal Descuento { get; set; }
        
     }
 }
