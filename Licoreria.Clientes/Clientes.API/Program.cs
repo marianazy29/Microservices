@@ -22,14 +22,10 @@ builder.Services.AddCors(setup =>
     });
 });
 // Add services to the container.
-/*builder.Services.Configure<KafkaConsumerSettings>(
-    builder.Configuration.GetSection("Kafka:Consumer"));*/
 
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<IClienteService, ClienteService>();
 
-/*builder.Services.AddSingleton<KafkaConsumer>();
-builder.Services.AddHostedService<KafkaConsumerService>();*/
 builder.Services.AddHostedService<KafkaConsumerHostedService>();
 
 builder.Services.AddDbContext<ClienteDbContext>(options =>

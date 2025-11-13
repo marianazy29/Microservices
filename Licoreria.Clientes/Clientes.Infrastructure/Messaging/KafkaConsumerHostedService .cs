@@ -20,7 +20,7 @@ namespace Clientes.Infrastructure.Messaging
         private IConsumer<Ignore, string> _consumer;
         private CancellationTokenSource _cts;
 
-        private const string BOOKS_TOPIC_NAME = "books";
+        private const string VENTA_TOPIC_NAME = "ventas";
 
         public KafkaConsumerHostedService(ILogger<KafkaConsumerHostedService> logger, IServiceProvider serviceProvider)
         {
@@ -48,7 +48,7 @@ namespace Clientes.Infrastructure.Messaging
 
         private async Task ConsumeMessages(CancellationToken cancellationToken)
         {
-            _consumer.Subscribe(BOOKS_TOPIC_NAME);
+            _consumer.Subscribe(VENTA_TOPIC_NAME);
 
             try
             {
@@ -57,7 +57,7 @@ namespace Clientes.Infrastructure.Messaging
                     var result = _consumer.Consume(cancellationToken);
                     if (result != null)
                     {
-                        _logger.LogInformation($"Message received from topic {BOOKS_TOPIC_NAME}: {result.Message.Value}");
+                        _logger.LogInformation($"Message received from topic {VENTA_TOPIC_NAME}: {result.Message.Value}");
 
                         try
                         {
@@ -67,7 +67,10 @@ namespace Clientes.Infrastructure.Messaging
                                 using (var scope = _serviceProvider.CreateScope())
                                 {
                                     var clienteService = scope.ServiceProvider.GetRequiredService<IClienteService>();
-                                    await clienteService.SumarPuntos(ventaEvent.ClienteId,ventaEvent.MontoTotal);
+                                    _logger.LogInformation($"Llamando a SumarPuntos para ClienteId={ventaEvent.ClienteId}, MontoTotal={ventaEvent.MontoTotal}");
+                                    await clienteService.SumarPuntos(ventaEvent.ClienteId, ventaEvent.MontoTotal);
+                                    _logger.LogInformation($"Terminó SumarPuntos para ClienteId={ventaEvent.ClienteId}");
+                                    
                                 }
                             }
                         }
@@ -80,7 +83,7 @@ namespace Clientes.Infrastructure.Messaging
             }
             catch (OperationCanceledException)
             {
-                // Salida limpia
+                
             }
             finally
             {
