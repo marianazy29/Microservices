@@ -25,7 +25,8 @@ namespace Clientes.Infrastructure.Persistence.Implementations
         }
 
         public async Task Update(Cliente cliente)
-        {          
+        {
+            _context.Set<Cliente>().Update(cliente); 
             await _context.SaveChangesAsync();
         }
 

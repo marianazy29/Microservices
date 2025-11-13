@@ -17,7 +17,7 @@ namespace Clientes.Infrastructure.Messaging
     {
         private readonly ILogger<KafkaConsumerHostedService> _logger;        
         private readonly IServiceProvider _serviceProvider;
-        private IConsumer<Ignore, string> _consumer;
+        private IConsumer<string, string> _consumer;
         private CancellationTokenSource _cts;
 
         private const string VENTA_TOPIC_NAME = "ventas";
@@ -31,10 +31,11 @@ namespace Clientes.Infrastructure.Messaging
             {
                 BootstrapServers = "kafka-broker:29092",
                 GroupId = "cliente-service",
-                AutoOffsetReset = AutoOffsetReset.Earliest
+                AutoOffsetReset = AutoOffsetReset.Earliest,
+                EnableAutoCommit = false
             };
 
-            _consumer = new ConsumerBuilder<Ignore, string>(config).Build();
+            _consumer = new ConsumerBuilder<string, string>(config).Build();
             _serviceProvider = serviceProvider;
         }
 

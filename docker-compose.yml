@@ -18,7 +18,7 @@ services:
       - SA_PASSWORD=System32
       - MSSQL_PID=Developer
     ports:
-      - "1433:1433"
+      - "1435:1433"
     volumes:
       - sql_data:/var/opt/mssql
 
@@ -31,6 +31,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
       - cliente_db
+      - kafka-broker
 
   clientes2:
     build:
@@ -41,6 +42,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
       - cliente_db
+      - kafka-broker
 
   ventas_db:
     image: mcr.microsoft.com/mssql/server:2022-latest

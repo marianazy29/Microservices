@@ -43,6 +43,31 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ClienteDbContext>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+    var maxRetries = 10;
+    var delay = TimeSpan.FromSeconds(5);
+
+    for (int i = 0; i < maxRetries; i++)
+    {
+        try
+        {
+            db.Database.Migrate();
+            logger.LogInformation("Migraciones aplicadas correctamente.");
+            break;
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, $"Intento {i + 1} de {maxRetries}: no se pudo conectar a la base de datos.");
+            Thread.Sleep(delay);
+        }
+    }
+}
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
