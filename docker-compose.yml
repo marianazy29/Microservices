@@ -105,6 +105,17 @@ services:
       echo -e 'Successfully created the following topics:'
       kafka-topics --bootstrap-server kafka-broker:29092 --list
       "
+  auth-server:
+    image: keycloak/keycloak:26.4
+    ports:
+      - 5004:8080
+    container_name: auth-server
+    command: start-dev
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+    volumes:
+      - ./keycloak-data:/opt/keycloak/data
 
 volumes:
   sql_data:
