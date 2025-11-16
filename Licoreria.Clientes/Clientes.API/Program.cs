@@ -46,9 +46,10 @@ builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
         options.Authority = "http://auth-server:8080/realms/licoreria-microservices";
+        options.RequireHttpsMetadata = false;
         options.TokenValidationParameters = new()
         {
-            ValidateAudience = false,
+            ValidateAudience = false,            
             ValidateIssuer = true
         };
     });
