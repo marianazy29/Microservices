@@ -28,9 +28,10 @@ builder.Services.AddCors(setup =>
 // Add services to the container.
 builder.Services.AddScoped<IVentaRepository, VentaRepository>();
 builder.Services.AddScoped<IVentaService, VentaService>();
-builder.Services.AddScoped<IClienteApiClient, ClienteApiClient>();
 builder.Services.AddScoped<IKafkaProducer, KafkaProducer>();
 builder.Services.AddScoped<RegistrarVentaUseCase>();
+builder.Services.AddHttpClient<ITokenService, TokenService>();
+
 
 builder.Services.AddDbContext<VentaDbContext>(options =>
 {

@@ -15,16 +15,19 @@ namespace Ventas.Application.Implementations
     {
         private readonly IVentaRepository _ventaRepository;
         private readonly IClienteApiClient _clienteApiClient;
-
+      
         public VentaService(IVentaRepository ventaRepository, IClienteApiClient clienteApiClient)
         {
             _ventaRepository = ventaRepository;
             _clienteApiClient = clienteApiClient;
+            
         }
 
         public async Task<string> RegistrarVenta(DtoRequestVenta requestVenta)
         {
             string estadoVenta = "Venta creada.";
+
+           
 
             if (!await _clienteApiClient.GetByid(requestVenta.ClienteId))
             {
@@ -38,17 +41,10 @@ namespace Ventas.Application.Implementations
                 venta.AgregarDetalle(d.ProductoId, d.Cantidad, d.Precio,d.Descuento);
             }
 
-            await _ventaRepository.Add(venta);
-
-           
-          /*  decimal monto = Convert.ToDecimal(venta.MontoTotal);
-            int bloques = (int)Math.Floor(monto / 50m);
-            int puntos = bloques * 10;*/
+            await _ventaRepository.Add(venta);         
+          
 
             return estadoVenta;
-            
-
-            //await _clienteClient.SumarPuntosAsync(clienteId, puntos);
 
             
         }

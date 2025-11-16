@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -12,14 +13,21 @@ namespace Ventas.Infrastructure.ExternalServices
     public class ClienteApiClient : IClienteApiClient
     {
         private readonly HttpClient _httpClient;
+        private readonly ITokenService _tokenService;
 
-        public ClienteApiClient(HttpClient httpClient)
+        public ClienteApiClient(HttpClient httpClient, ITokenService tokenService)
         {
             _httpClient = httpClient;
+            _tokenService = tokenService;
         }
 
         public async Task<bool> GetByid(Guid id)
         {
+            var token = await _tokenService.ObtenerTokenDeAcceso();
+
+            _httpClient.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("Bearer", token);
+
             var response = await _httpClient.GetAsync($"api/Clientes/{id}");
 
             if (response.IsSuccessStatusCode)
