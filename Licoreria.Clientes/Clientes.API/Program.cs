@@ -5,6 +5,7 @@ using Clientes.Infrastructure.ExternalServices;
 using Clientes.Infrastructure.Messaging;
 using Clientes.Infrastructure.Persistence;
 using Clientes.Infrastructure.Persistence.Implementations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -40,6 +41,24 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.Authority = "http://auth-server:8080/realms/licoreria-microservices";
+        options.TokenValidationParameters = new()
+        {
+            ValidateAudience = false,
+            ValidateIssuer = true
+        };
+    });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+});
 
 var app = builder.Build();
 
